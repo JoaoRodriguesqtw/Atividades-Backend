@@ -1,12 +1,9 @@
 import express from "express";
 
 const app = express(); //Primeiro pilar: instancia do express
+const PORT = 3000;
 
-/*idlivro identificador/int
-dstitulo string
-dsautor  string
-fgdisponivel  boolean
- */
+
 
 let livros = []; // banko of dados
 
@@ -20,7 +17,7 @@ app.get("/livros", (req,res) => {
 });
 
 
-app.listen(3000); // porta a ser ouvida
+app.listen(PORT); // porta a ser ouvida
 
 
 
