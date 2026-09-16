@@ -3,26 +3,18 @@ import express from "express";
 const app = express(); //Primeiro pilar: instancia do express
 const PORT = 3000;
 
-
-
 let livros = []; // banko of dados
 
 // metodos + caminhos + funcção
-app.get("/", (req,res) => {
-    res.send("bananilson farofa")
+app.get("/", (req, res) => {
+  res.send("rota raiz");
 });
 
-app.get("/livros", (req,res) => {
-    res.send("Hello world!")
+app.get("/livros", (req, res) => {
+  res.send("rota livros!");
 });
-
 
 app.listen(PORT); // porta a ser ouvida
-
-
-
-
-
 
 /*
 cadastrarm livros
