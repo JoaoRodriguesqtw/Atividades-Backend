@@ -4,7 +4,7 @@ const app = express(); //Primeiro pilar: instancia do express
 const PORT = 3000;
 
 let livros = [
-    {id:1,dsTitulo:"As cronicas de narnia",dsAutor:"C.S. Lewis"}
+  { id: 1, dsTitulo: "As cronicas de narnia", dsAutor: "C.S. Lewis" },
 ]; // banko of dados
 
 // metodos + caminhos + funcção
@@ -16,19 +16,15 @@ app.get("/livros", (req, res) => {
   res.json(livros);
 });
 
-app.get("/livros/:id", (req,res) =>{
-    const id = parseInt(req.params.id)
-    if (isNaN(id)){
-        return res
-        .status(400)
-        .json({mensagem:"o parametro deve ser um numero valido"});
-    }
-    res.send("deu certo")
-})
-
-
-
-
+app.get("/livros/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res
+      .status(400)
+      .json({ mensagem: "o parametro deve ser um numero valido" });
+  }
+  res.send("deu certo");
+});
 
 app.listen(PORT); // porta a ser ouvida
 
