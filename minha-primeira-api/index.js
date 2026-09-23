@@ -1,11 +1,13 @@
 import express from "express";
 
 const app = express(); //Primeiro pilar: instancia do express
+app.use(express.json())
 const PORT = 3000;
+let ultimo_id = 1;
 
 let livros = [
   { id: 1, dsTitulo: "As cronicas de narnia", dsAutor: "C.S. Lewis" },
-]; // banko of dados
+]; // banco de dados
 
 // metodos + caminhos + funcção
 app.get("/", (req, res) => {
@@ -23,13 +25,48 @@ app.get("/livros/:id", (req, res) => {
       .status(400)
       .json({ mensagem: "o parametro deve ser um numero valido" });
   }
-  res.send("deu certo");
+  //find
+  let livro = livros.find((livro) => {
+    return livro.id === id;
+  });
+  c
+
+  if (!livro) {
+    return res.status(404).send();
+  }
+
+  res.json(livro);
 });
+
+
+
+app.post("/livros",(req,res)=>{
+  let id_novo = ultimo_id + 1
+  ultimo_id++
+
+  let autor_enviado = req.body.dsAutor
+  let titulo_enviado = req.body.dsTitulo
+
+  if(!autor_enviado ||!titulo_enviado ){
+    return res.status(400).json({mensagem:"dados faltando, verifique autor e titulo"})
+  }
+
+  let novo_livro = {
+    id : id_novo,
+    fgDisponivel : true,
+    dsTitulo: titulo_enviado,
+    dsAutor: autor_enviado
+  };
+
+livros.push(novo_livro) // novo livro adicionado
+res.status(201).json(novo_livro)
+
+})
 
 app.listen(PORT); // porta a ser ouvida
 
 /*
-cadastrarm livros
+cadastrar livros
 post
 
 buscar todos livros
