@@ -58,10 +58,30 @@ app.post("/livros",(req,res)=>{
     dsAutor: autor_enviado
   };
 
-livros.push(novo_livro) // novo livro adicionado
-res.status(201).json(novo_livro)
+livros.push(novo_livro); // novo livro adicionado
+res.status(201).json(novo_livro);
 
-})
+});
+
+app.delete("/livros/:id",(req,res)=>{
+  const id = parseInt(req.params.id);
+
+  if(isNaN(id)){
+    return res.status(400).json({mensagem:"identificador deve ser um numero"});
+  };
+
+  let indexLivro = livros.findIndex((livro) =>{
+    return livro.id === id;
+  });
+  
+
+  if(indexLivro === -1){
+    return res.status(404).send();
+  };
+
+  livros.splice(indexLivro,1);
+  res.status(204).send()
+});
 
 app.listen(PORT); // porta a ser ouvida
 
