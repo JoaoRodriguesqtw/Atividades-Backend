@@ -85,25 +85,3 @@ app.delete("/livros/:id",(req,res)=>{
 
 app.listen(PORT); // porta a ser ouvida
 
-/*
-cadastrar livros
-post
-
-buscar todos livros
-get
-
-buscar um livro pelo nome
-get
-
-buscar um livro pelo id
-get
-
-emprestar livros
-put/patch
-
-devolver livros
-put/patch
-
-deletar livros
-delete
-*/
