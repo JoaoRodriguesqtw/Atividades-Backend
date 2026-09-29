@@ -14,10 +14,12 @@ app.get("/", (req, res) => {
   res.send("rota raiz");
 });
 
+// rota que pega todos os livros
 app.get("/livros", (req, res) => {
   res.json(livros);
 });
 
+// rota que pega um livro unico
 app.get("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
@@ -39,7 +41,7 @@ app.get("/livros/:id", (req, res) => {
 });
 
 
-
+// rota que manda um livro
 app.post("/livros",(req,res)=>{
   let id_novo = ultimo_id + 1
   ultimo_id++
@@ -63,6 +65,7 @@ res.status(201).json(novo_livro);
 
 });
 
+// rota que deleta um livro pelo id
 app.delete("/livros/:id",(req,res)=>{
   const id = parseInt(req.params.id);
 
