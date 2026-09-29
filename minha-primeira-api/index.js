@@ -23,8 +23,9 @@ app.get("/livros", (req, res) => {
 app.get("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
+    // se não for um numero
     return res
-      .status(400)
+      .status(400) // requisição mal formada
       .json({ mensagem: "o parametro deve ser um numero valido" });
   }
   //find
