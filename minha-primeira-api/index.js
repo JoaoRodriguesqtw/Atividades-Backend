@@ -45,7 +45,7 @@ app.get("/livros/:id", (req, res) => {
   res.json(livro);
 });
 
-//  rota que modifica o livro
+//  rota que modifica o livro pelo id
 app.patch("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -65,10 +65,18 @@ app.patch("/livros/:id", (req, res) => {
   }
 
   let livro_a_ser_atualizado = livros[index_livro];
-  livro_a_ser_atualizado.dsAutor = req.body.dsAutor;
-  livro_a_ser_atualizado.dsTitulo = req.body.dsTitulo;
-  res.status(200).json(livro_a_ser_atualizado);
+  let novo_autor = req.body.dsAutor;
+  let novo_titulo = req.body.dsTitulo;
 
+  if (novo_autor !== undefined) {
+    livro_a_ser_atualizado.dsAutor = novo_autor;
+  }
+
+  if (novo_titulo !== undefined) {
+    livro_a_ser_atualizado.dsTitulo = novo_titulo;
+  }
+
+  res.status(200).json(livro_a_ser_atualizado);
 });
 
 // rota que cria um livro
