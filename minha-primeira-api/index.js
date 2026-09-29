@@ -5,9 +5,9 @@ app.use(express.json());
 const PORT = 3000;
 let ultimo_id = 1;
 
-function ValidaParametro(parametro_a_ser_validado){
+function ValidaParametro(parametro_a_ser_validado) {
   const numero = parseInt(parametro_a_ser_validado);
-  return isNaN(numero)
+  return isNaN(numero);
 }
 
 let livros = [
@@ -27,7 +27,7 @@ app.get("/livros", (req, res) => {
 // rota que pega um livro unico
 app.get("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  if (!ValidaParametro(id)) {
+  if (ValidaParametro(id)) {
     // se não for um numero
     return res
       .status(400) // requisição mal formada
@@ -45,16 +45,30 @@ app.get("/livros/:id", (req, res) => {
   res.json(livro);
 });
 
-app.patch("/livros/id:", (req, res) => {
+//  rota que modifica o livro
+app.patch("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
-  if (!ValidaParametro(id)) {
+  // valida id
+  if (ValidaParametro(id)) {
     return res
       .status(400) // requisição mal formada
       .json({ mensagem: "o parametro deve ser um numero valido" });
   }
 
-  let livro = livros.findIndex()
+  let index_livro = livros.findIndex((livro) => {
+    return livro.id === id;
+  });
+
+  if (index_livro === -1) {
+    return res.sendStatus(404);
+  }
+
+  let livro_a_ser_atualizado = livros[index_livro];
+  livro_a_ser_atualizado.dsAutor = req.body.dsAutor;
+  livro_a_ser_atualizado.dsTitulo = req.body.dsTitulo;
+  res.status(200).json(livro_a_ser_atualizado);
+
 });
 
 // rota que cria um livro
@@ -86,7 +100,7 @@ app.post("/livros", (req, res) => {
 app.delete("/livros/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
-  if (!ValidaParametro(id)) {
+  if (ValidaParametro(id)) {
     return res
       .status(400)
       .json({ mensagem: "identificador deve ser um numero" });
