@@ -32,7 +32,7 @@ app.get("/livros/:id", (req, res) => {
   let livro = livros.find((livro) => {
     return livro.id === id;
   });
-  c
+  
 
   if (!livro) {
     return res.status(404).send();
@@ -42,17 +42,17 @@ app.get("/livros/:id", (req, res) => {
 });
 
 
-// rota que manda um livro
+// rota que cria um livro
 app.post("/livros",(req,res)=>{
-  let id_novo = ultimo_id + 1
-  ultimo_id++
+  let id_novo = ultimo_id + 1;
+  ultimo_id++;
 
-  let autor_enviado = req.body.dsAutor
-  let titulo_enviado = req.body.dsTitulo
+  let autor_enviado = req.body.dsAutor;
+  let titulo_enviado = req.body.dsTitulo;
 
   if(!autor_enviado ||!titulo_enviado ){
     return res.status(400).json({mensagem:"dados faltando, verifique autor e titulo"})
-  }
+  };
 
   let novo_livro = {
     id : id_novo,
