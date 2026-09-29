@@ -79,6 +79,37 @@ app.patch("/livros/:id", (req, res) => {
   res.status(200).json(livro_a_ser_atualizado);
 });
 
+// rota que empresta um livro
+app.patch("/livros/:id/emprestar", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (ValidaParametro(id)) {
+    return res
+      .status(400) // requisição mal formada
+      .json({ mensagem: "o parametro deve ser um numero valido" });
+  }
+
+  let index_livro = livros.findIndex((livro) => {
+    return livro.id === id;
+  });
+
+  if (index_livro === -1) {
+    return res.sendStatus(404);
+  }
+
+  let livro_a_ser_atualizado = livros[index_livro];
+
+  if (livro_a_ser_atualizado.fgDisponivel === false) {
+    return res
+      .status(409) // requisição mal formada
+      .json({ mensagem: "Conflito: o livro já esta emprestado" });
+  }
+
+  livro_a_ser_atualizado.fgDisponivel = false;
+
+  res.status(200).json(livro_a_ser_atualizado);
+});
+
 // rota que cria um livro
 app.post("/livros", (req, res) => {
   let id_novo = ultimo_id + 1;
