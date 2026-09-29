@@ -11,7 +11,12 @@ function ValidaParametro(parametro_a_ser_validado) {
 }
 
 let livros = [
-  { id: 1, dsTitulo: "As cronicas de narnia", dsAutor: "C.S. Lewis" },
+  {
+    id: 1,
+    fgDisponivel: true,
+    dsTitulo: "As cronicas de narnia",
+    dsAutor: "C.S. Lewis",
+  },
 ]; // banco de dados
 
 // metodos + caminhos + funcção
@@ -106,6 +111,37 @@ app.patch("/livros/:id/emprestar", (req, res) => {
   }
 
   livro_a_ser_atualizado.fgDisponivel = false;
+
+  res.status(200).json(livro_a_ser_atualizado);
+});
+
+// rota que devolve o livro
+app.patch("/livros/:id/devolver", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (ValidaParametro(id)) {
+    return res
+      .status(400) // requisição mal formada
+      .json({ mensagem: "o parametro deve ser um numero valido" });
+  }
+
+  let index_livro = livros.findIndex((livro) => {
+    return livro.id === id;
+  });
+
+  if (index_livro === -1) {
+    return res.sendStatus(404);
+  }
+
+  let livro_a_ser_atualizado = livros[index_livro];
+
+  if (livro_a_ser_atualizado.fgDisponivel === true) {
+    return res
+      .status(409) // requisição mal formada
+      .json({ mensagem: "Conflito: o livro já esta disponivel" });
+  }
+
+  livro_a_ser_atualizado.fgDisponivel = true;
 
   res.status(200).json(livro_a_ser_atualizado);
 });
